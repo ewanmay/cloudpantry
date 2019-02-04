@@ -1,0 +1,14 @@
+{
+    "providers": {
+        "awscloudformation": {
+            "AuthRoleName": "cloudpantry-20190202225451-authRole",
+            "UnauthRoleArn": "arn:aws:iam::855317835014:role/cloudpantry-20190202225451-unauthRole",
+            "AuthRoleArn": "arn:aws:iam::855317835014:role/cloudpantry-20190202225451-authRole",
+            "Region": "us-east-1",
+            "DeploymentBucketName": "cloudpantry-20190202225451-deployment",
+            "UnauthRoleName": "cloudpantry-20190202225451-unauthRole",
+            "StackName": "cloudpantry-20190202225451",
+            "StackId": "arn:aws:cloudformation:us-east-1:855317835014:stack/cloudpantry-20190202225451/393f7690-2778-11e9-83f6-0a5ca37ccc16"
+        }
+    }
+}

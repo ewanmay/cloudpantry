@@ -1,15 +1,12 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- *
- * @format
- * @flow
- * @lint-ignore-every XPLATJSCOPYRIGHT1
- */
-
-import React, {Component} from 'react';
-import {Platform, StyleSheet, Text, View} from 'react-native';
-
+import React, { Component } from 'react';
+import { Platform, StyleSheet, Text, View } from 'react-native';
+import { createStackNavigator, createAppContainer } from 'react-navigation';
+import { LandingScreen, LoginScreen, RegisterScreen } from './src/features/auth';
+import Amplify, { Auth } from 'aws-amplify';
+import awsConfig from './aws-config';
+import {withAuthenticator } from 'aws-amplify-react-native';
+import AppAuthenticator from './src/features/auth/components/authenticator';
+Amplify.configure(awsConfig);
 const instructions = Platform.select({
   ios: 'Press Cmd+R to reload,\n' + 'Cmd+D or shake for dev menu',
   android:
@@ -17,34 +14,47 @@ const instructions = Platform.select({
     'Shake or press menu button for dev menu',
 });
 
-type Props = {};
-export default class App extends Component<Props> {
+class App extends Component {
+  async signIn(e) {
+    console.log(e);
+  }
   render() {
+    const federated = {
+    google_client_id: '', // Enter your google_client_id here
+    facebook_app_id: '378738719341266', // Enter your facebook_app_id here
+    amazon_client_id: '' // Enter your amazon_client_id here
+  };
     return (
-      <View style={styles.container}>
-        <Text style={styles.welcome}>Welcome to React Native!</Text>
-        <Text style={styles.instructions}>To get started, edit App.js</Text>
-        <Text style={styles.instructions}>{instructions}</Text>
-      </View>
+      <AppAuthenticator
+      myAWSExports={awsConfig}
+      federated={federated}
+      signIn={this.signIn}
+      >
+        <AppNavigator />
+      </AppAuthenticator>
+
     );
   }
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#F5FCFF',
-  },
-  welcome: {
-    fontSize: 20,
-    textAlign: 'center',
-    margin: 10,
-  },
-  instructions: {
-    textAlign: 'center',
-    color: '#333333',
-    marginBottom: 5,
-  },
+const stackNav = createStackNavigator({
+  loginFlow: {
+    screen: createStackNavigator(
+      {
+        Landing: LandingScreen,
+        Register: RegisterScreen,
+        Login: LoginScreen
+      },
+      {
+        initialRouteName: "Login"
+      }
+    ),
+    navigationOptions: () => ({
+      header: null
+    })
+  }
 });
+
+const AppNavigator = createAppContainer(stackNav);
+
+export default withAuthenticator(App);
