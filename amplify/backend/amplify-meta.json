@@ -31,5 +31,31 @@
 			},
 			"lastPushDirHash": "Y+g0/fafHj+PZTcY0VryavPH5Mc="
 		}
+	},
+	"storage": {
+		"devDB": {
+			"service": "DynamoDB",
+			"providerPlugin": "awscloudformation"
+		}
+	},
+	"function": {
+		"cloudpantryApi": {
+			"service": "Lambda",
+			"providerPlugin": "awscloudformation",
+			"build": true,
+			"dependsOn": [
+				{
+					"category": "storage",
+					"resourceName": "devDB",
+					"attributes": [
+						"Name",
+						"Arn"
+					]
+				}
+			],
+			"lastBuildTimeStamp": "2019-02-05T00:07:11.401Z",
+			"lastPackageTimeStamp": "2019-02-05T00:07:32.781Z",
+			"distZipFilename": "cloudpantryApi-1549325231-latest-build.zip"
+		}
 	}
 }
