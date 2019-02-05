@@ -1,0 +1,5 @@
+{
+    "tableName": "devDB",
+    "partitionKeyName": "id",
+    "partitionKeyType": "S"
+}

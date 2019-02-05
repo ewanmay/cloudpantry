@@ -3,10 +3,8 @@ import { Platform, StyleSheet, Text, View } from 'react-native';
 import { createStackNavigator, createAppContainer } from 'react-navigation';
 import { LandingScreen, LoginScreen, RegisterScreen } from './src/features/auth';
 import Amplify, { Auth } from 'aws-amplify';
-import awsConfig from './aws-config';
 import {withAuthenticator } from 'aws-amplify-react-native';
 import AppAuthenticator from './src/features/auth/components/authenticator';
-Amplify.configure(awsConfig);
 const instructions = Platform.select({
   ios: 'Press Cmd+R to reload,\n' + 'Cmd+D or shake for dev menu',
   android:
@@ -25,13 +23,8 @@ class App extends Component {
     amazon_client_id: '' // Enter your amazon_client_id here
   };
     return (
-      <AppAuthenticator
-      myAWSExports={awsConfig}
-      federated={federated}
-      signIn={this.signIn}
-      >
+
         <AppNavigator />
-      </AppAuthenticator>
 
     );
   }
@@ -56,5 +49,21 @@ const stackNav = createStackNavigator({
 });
 
 const AppNavigator = createAppContainer(stackNav);
-
+const signUpConfig = {
+  header: "Sign Up",
+  signUpFields: [
+  {
+    label: "Password",
+    key: "password",
+    required: true,
+    displayOrder: 2,
+    type: 'password'
+  },{
+    label: "Email",
+    key: "email",
+    required: true,
+    displayOrder: 3,
+    type: 'string'
+  }]
+}
 export default withAuthenticator(App);

@@ -19,7 +19,7 @@
 				"s3TemplateURL": "https://s3.amazonaws.com/cloudpantry-20190202225451-deployment/amplify-cfn-templates/auth/cognito2b6201b7-cloudformation-template.yml",
 				"logicalId": "authcognito2b6201b7"
 			},
-			"lastPushTimeStamp": "2019-02-03T05:58:48.267Z",
+			"lastPushTimeStamp": "2019-02-05T05:38:12.881Z",
 			"output": {
 				"AppClientSecret": "lmatvu7tga6k9uoe3u3g8t7gf7u608vfi3gjt63k0g1dt9l9p93",
 				"UserPoolId": "us-east-1_ShrJYfqYA",
@@ -29,7 +29,57 @@
 				"IdentityPoolName": "cognito2b6201b7_identitypool_2b6201b7",
 				"UserPoolName": "cognito2b6201b7_userpool_2b6201b7"
 			},
-			"lastPushDirHash": "Y+g0/fafHj+PZTcY0VryavPH5Mc="
+			"lastPushDirHash": "WL5HFUGA5l89PV49IH7Zu32fLVY="
+		}
+	},
+	"storage": {
+		"devDB": {
+			"service": "DynamoDB",
+			"providerPlugin": "awscloudformation",
+			"providerMetadata": {
+				"s3TemplateURL": "https://s3.amazonaws.com/cloudpantry-20190202225451-deployment/amplify-cfn-templates/storage/devDB-cloudformation-template.json",
+				"logicalId": "storagedevDB"
+			},
+			"lastPushTimeStamp": "2019-02-05T05:38:12.881Z",
+			"output": {
+				"PartitionKeyName": "id",
+				"Region": "us-east-1",
+				"Arn": "arn:aws:dynamodb:us-east-1:855317835014:table/devDB",
+				"PartitionKeyType": "S",
+				"Name": "devDB"
+			},
+			"lastPushDirHash": "9RsvqOgSR2HrFkVK7pUYK2OKwcE="
+		}
+	},
+	"function": {
+		"cloudpantryApi": {
+			"service": "Lambda",
+			"providerPlugin": "awscloudformation",
+			"build": true,
+			"dependsOn": [
+				{
+					"category": "storage",
+					"resourceName": "devDB",
+					"attributes": [
+						"Name",
+						"Arn"
+					]
+				}
+			],
+			"lastBuildTimeStamp": "2019-02-05T05:35:35.472Z",
+			"lastPackageTimeStamp": "2019-02-05T05:35:35.659Z",
+			"distZipFilename": "cloudpantryApi-1549344935-latest-build.zip",
+			"providerMetadata": {
+				"s3TemplateURL": "https://s3.amazonaws.com/cloudpantry-20190202225451-deployment/amplify-cfn-templates/function/cloudpantryApi-cloudformation-template.json",
+				"logicalId": "functioncloudpantryApi"
+			},
+			"lastPushTimeStamp": "2019-02-05T05:38:12.881Z",
+			"output": {
+				"Region": "us-east-1",
+				"Arn": "arn:aws:lambda:us-east-1:855317835014:function:cloudpantryApi",
+				"Name": "cloudpantryApi"
+			},
+			"lastPushDirHash": "NfZytkY6E95TPChvqACJLz5Ek8k="
 		}
 	}
 }

@@ -2,23 +2,26 @@ import * as React from 'react';
 import { View, Text } from 'react-native';
 import Button from '../../common/button';
 import Field from '../../common/field';
+import { Auth } from 'aws-amplify';
 // import { authActions } from "../../../ducks/auth";
 class LoginScreen extends React.Component {
+
+  async displayUser() {
+    const user = await Auth.currentAuthenticatedUser({
+      bypassCache: false
+    })
+    return user;
+  }
 
   render() {
     return(
       <View>
         <Text>
           Login Page
+          User Properties:
+          {this.displayUser()}
         </Text>
-        <Field
-        onChangeText={(password: string) => this.props.passwordChanged(password)}
-        value={this.props.password}
-        label='Password'
-        placeholder='password'
-        secure={true}
-    />
-         
+        
         {/* <Field />
         <Button/> */}
       </View>

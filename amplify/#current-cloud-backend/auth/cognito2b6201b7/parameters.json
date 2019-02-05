@@ -1,12 +1,6 @@
 {
-    "identityPoolName": "cognito2b6201b7_identitypool_2b6201b7",
-    "allowUnauthenticatedIdentities": false,
-    "thirdPartyAuth": false,
-    "lambdaLogPolicy": "cognito2b6201b7_lambda_log_policy",
-    "openIdLambdaRoleName": "cognito2b6201b7_openid_lambda_role",
-    "openIdRolePolicy": "cognito2b6201b7_openid_pass_role_policy",
-    "openIdLambdaIAMPolicy": "cognito2b6201b7_openid_lambda_iam_policy",
-    "openIdLogPolicy": "cognito2b6201b7_openid_lambda_log_policy",
+    "resourceName": "cognito2b6201b7",
+    "authSelections": "identityPoolAndUserPool",
     "userPoolName": "cognito2b6201b7_userpool_2b6201b7",
     "autoVerifiedAttributes": [
         "email"
@@ -47,11 +41,17 @@
     "userpoolClientLogPolicy": "cognito2b6201b7_userpoolclient_lambda_log_policy",
     "userpoolClientLambdaPolicy": "cognito2b6201b7_userpoolclient_lambda_iam_policy",
     "userpoolClientSetAttributes": false,
+    "identityPoolName": "cognito2b6201b7_identitypool_2b6201b7",
+    "allowUnauthenticatedIdentities": false,
+    "thirdPartyAuth": false,
+    "lambdaLogPolicy": "cognito2b6201b7_lambda_log_policy",
+    "openIdLambdaRoleName": "cognito2b6201b7_openid_lambda_role",
+    "openIdRolePolicy": "cognito2b6201b7_openid_pass_role_policy",
+    "openIdLambdaIAMPolicy": "cognito2b6201b7_openid_lambda_iam_policy",
+    "openIdLogPolicy": "cognito2b6201b7_openid_lambda_log_policy",
     "useDefault": "default",
     "unAuthRoleName": "cloudpantry-20190202225451-unauthRole",
     "authRoleName": "cloudpantry-20190202225451-authRole",
     "unAuthRoleArn": "arn:aws:iam::855317835014:role/cloudpantry-20190202225451-unauthRole",
-    "authRoleArn": "arn:aws:iam::855317835014:role/cloudpantry-20190202225451-authRole",
-    "resourceName": "cognito2b6201b7",
-    "authSelections": "identityPoolAndUserPool"
+    "authRoleArn": "arn:aws:iam::855317835014:role/cloudpantry-20190202225451-authRole"
 }
