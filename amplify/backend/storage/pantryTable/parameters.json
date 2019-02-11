@@ -1,0 +1,5 @@
+{
+    "tableName": "pantryTable",
+    "partitionKeyName": "id",
+    "partitionKeyType": "S"
+}

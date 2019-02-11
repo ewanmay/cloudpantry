@@ -139,6 +139,17 @@
 				}
 			}
 		},
+		"storagepantryTable": {
+			"Type": "AWS::CloudFormation::Stack",
+			"Properties": {
+				"TemplateURL": "https://s3.amazonaws.com/cloudpantry-20190202225451-deployment/amplify-cfn-templates/storage/pantryTable-cloudformation-template.json",
+				"Parameters": {
+					"tableName": "pantryTable",
+					"partitionKeyName": "id",
+					"partitionKeyType": "S"
+				}
+			}
+		},
 		"functioncloudpantryApi": {
 			"Type": "AWS::CloudFormation::Stack",
 			"Properties": {
@@ -153,6 +164,46 @@
 					"storagedevDBArn": {
 						"Fn::GetAtt": [
 							"storagedevDB",
+							"Outputs.Arn"
+						]
+					}
+				}
+			}
+		},
+		"functioncloudpantryda9b627e": {
+			"Type": "AWS::CloudFormation::Stack",
+			"Properties": {
+				"TemplateURL": "https://s3.amazonaws.com/cloudpantry-20190202225451-deployment/amplify-cfn-templates/function/cloudpantryda9b627e-cloudformation-template.json",
+				"Parameters": {
+					"storagepantryTableName": {
+						"Fn::GetAtt": [
+							"storagepantryTable",
+							"Outputs.Name"
+						]
+					},
+					"storagepantryTableArn": {
+						"Fn::GetAtt": [
+							"storagepantryTable",
+							"Outputs.Arn"
+						]
+					}
+				}
+			}
+		},
+		"apigroupAPI": {
+			"Type": "AWS::CloudFormation::Stack",
+			"Properties": {
+				"TemplateURL": "https://s3.amazonaws.com/cloudpantry-20190202225451-deployment/amplify-cfn-templates/api/groupAPI-cloudformation-template.json",
+				"Parameters": {
+					"functioncloudpantryda9b627eName": {
+						"Fn::GetAtt": [
+							"functioncloudpantryda9b627e",
+							"Outputs.Name"
+						]
+					},
+					"functioncloudpantryda9b627eArn": {
+						"Fn::GetAtt": [
+							"functioncloudpantryda9b627e",
 							"Outputs.Arn"
 						]
 					}

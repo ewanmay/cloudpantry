@@ -1,10 +1,15 @@
 import React, { Component } from 'react';
 import { Platform, StyleSheet, Text, View } from 'react-native';
 import { createStackNavigator, createAppContainer } from 'react-navigation';
-import { LandingScreen, LoginScreen, RegisterScreen } from './src/features/auth';
-import Amplify, { Auth } from 'aws-amplify';
-import {withAuthenticator } from 'aws-amplify-react-native';
-import AppAuthenticator from './src/features/auth/components/authenticator';
+import { Provider } from 'react-redux';
+import { withAuthenticator } from 'aws-amplify-react-native';
+import { PantryScreen,  CreateItemScreen,  CreateGroupScreen} from './src/features/pantry';
+import { createStore, applyMiddleware } from "redux";
+import {setTopLevelNavigator} from './src/utils/navigationService'
+import reducers from './src/ducks/reducers'
+import ReduxThunk from "redux-thunk";
+import PantryItem from './src/features/pantry/components/pantry-item';
+import {API } from 'aws-amplify'
 const instructions = Platform.select({
   ios: 'Press Cmd+R to reload,\n' + 'Cmd+D or shake for dev menu',
   android:
@@ -12,34 +17,42 @@ const instructions = Platform.select({
     'Shake or press menu button for dev menu',
 });
 
+
+let store = createStore(reducers, {}, applyMiddleware(ReduxThunk));
 class App extends Component {
-  async signIn(e) {
-    console.log(e);
-  }
+
   render() {
-    const federated = {
-    google_client_id: '', // Enter your google_client_id here
-    facebook_app_id: '378738719341266', // Enter your facebook_app_id here
-    amazon_client_id: '' // Enter your amazon_client_id here
-  };
+    // const store = createStore()
+    const item = {
+      name: "Bell Peppers",
+      price: "12.5",
+      quantity: "2",
+      expirationDate: "",
+      id: "97add10b-57d4-4cb2-894f-1a8b0077e690"
+    }
+    console.log(item);
     return (
-
-        <AppNavigator />
-
+      <Provider store={store}>
+        <AppNavigator         
+        ref={(navigator) => {
+          setTopLevelNavigator(navigator);
+        }}
+        />
+      </Provider>
     );
   }
 }
 
 const stackNav = createStackNavigator({
-  loginFlow: {
+  pantry: {
     screen: createStackNavigator(
       {
-        Landing: LandingScreen,
-        Register: RegisterScreen,
-        Login: LoginScreen
+        PantryHome: PantryScreen,
+        CreateGroup: CreateGroupScreen,
+        CreateItem: CreateItemScreen,
       },
       {
-        initialRouteName: "Login"
+        initialRouteName: "PantryHome"
       }
     ),
     navigationOptions: () => ({
@@ -48,22 +61,11 @@ const stackNav = createStackNavigator({
   }
 });
 
+let federated = {
+  google_client_id: '', // Enter your google_client_id here
+  facebook_app_id: '378738719341266', // Enter your facebook_app_id here
+  amazon_client_id: '' // Enter your amazon_client_id here
+};
 const AppNavigator = createAppContainer(stackNav);
-const signUpConfig = {
-  header: "Sign Up",
-  signUpFields: [
-  {
-    label: "Password",
-    key: "password",
-    required: true,
-    displayOrder: 2,
-    type: 'password'
-  },{
-    label: "Email",
-    key: "email",
-    required: true,
-    displayOrder: 3,
-    type: 'string'
-  }]
-}
-export default withAuthenticator(App);
+
+export default withAuthenticator(App, federated={federated});
