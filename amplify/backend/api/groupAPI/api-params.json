@@ -1,0 +1,35 @@
+{
+    "paths": [
+        {
+            "name": "/pantry",
+            "lambdaFunction": "cloudpantryda9b627e",
+            "privacy": {
+                "private": true,
+                "auth": "rw"
+            }
+        }
+    ],
+    "resourceName": "groupAPI",
+    "apiName": "cloudpantryccade4da",
+    "functionArns": [
+        {
+            "lambdaFunction": "cloudpantryda9b627e"
+        }
+    ],
+    "privacy": {
+        "auth": 1,
+        "unauth": 0,
+        "authRoleName": "cloudpantry-20190202225451-authRole",
+        "unAuthRoleName": "cloudpantry-20190202225451-unauthRole"
+    },
+    "dependsOn": [
+        {
+            "category": "function",
+            "resourceName": "cloudpantryda9b627e",
+            "attributes": [
+                "Name",
+                "Arn"
+            ]
+        }
+    ]
+}
