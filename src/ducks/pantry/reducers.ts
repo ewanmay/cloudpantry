@@ -21,6 +21,7 @@ import {
   PANTRY_ITEM_FORM_VALIDATE_RESET,
   PANTRY_ITEM_FORM_RESET,
   PANTRY_ITEM_PRICE_CHANGE,
+  RETRIEVED_PANTRY_GROUP
 
 } from "./types";
 import { initialPantryStateInterface } from "./interfaces";
@@ -71,6 +72,8 @@ const pantryGroupsReducer = (state = initialPantryState, action: AnyAction) => {
       return { ...state, currentGroup: action.payload };
     case CHANGE_PANTRY_GROUP_FAILURE:
       return { ...state, error: action.payload };
+    case RETRIEVED_PANTRY_GROUP:
+      return { ...state, groups: action.payload.groups, currentGroup: action.payload.currentGroup };
     default:
       return state;
   }

@@ -66,8 +66,8 @@ function createPantryGroupAction(
   const newGroup = {
     id: v4(),
     name: groupFieldName,
-    members: [],
-    pantryIds: []
+    memberIds: [],
+    pantryItems: []
   };
   createPantryGroup(newGroup, pantryGroups);
 }

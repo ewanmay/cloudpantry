@@ -16,8 +16,7 @@ export interface PantryItemForm {
 export interface PantryGroup {
   id: string,
   name: string,
-  memberIds: string[],
-  members: Array<string>,
+  memberIds: Array<string>,
   pantryItems: Array<PantryItem>
 }
 

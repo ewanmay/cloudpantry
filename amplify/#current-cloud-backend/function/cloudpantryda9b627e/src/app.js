@@ -38,6 +38,23 @@ app.use(function(req, res, next) {
   next()
 });
 
+app.get(path, function (req, res) {
+  var params = {
+    TableName: tableName,
+    Select: 'ALL_ATTRIBUTES',
+  };
+  dynamodb.scan(params, (err, data) => {
+    if (err) {
+      res.json({ error: 'Could not load items: ' + err.message });
+    }
+    res.json({
+      data: data.Items.map(item => {
+        return item;
+      })
+    });
+  });
+});
+
 // convert url string param to expected Type
 const convertUrlType = (param, type) => {
   switch(type) {
@@ -51,6 +68,8 @@ const convertUrlType = (param, type) => {
 /********************************
  * HTTP Get method for list objects *
  ********************************/
+
+
 
 app.get(path + hashKeyPath, function(req, res) {
   var condition = {}

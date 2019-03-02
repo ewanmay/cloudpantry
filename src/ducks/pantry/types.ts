@@ -18,4 +18,5 @@ export const CREATE_PANTRY_GROUP_SUCCESS = 'create_pantry_group_success';
 export const CHANGE_PANTRY_GROUP = 'change_pantry_group';
 export const CHANGE_PANTRY_GROUP_FAILURE = 'change_pantry_group_failure';
 export const GROUP_NAME_FIELD_CHANGE = 'group_name_field_change';
+export const RETRIEVED_PANTRY_GROUP = 'retrieved_pantry_group';
 export const TOGGLE_MENU = 'toggle_menu'

@@ -11,7 +11,7 @@ interface screenComponent extends React.Component {
   navigationOptions?: Object;
 }
 
-function renderScreen(
+ function renderScreen(
   groups: Array<PantryGroup>,
   navigation: any,
   currentGroup: PantryGroup,
@@ -46,7 +46,7 @@ function renderScreen(
           {PantryMenu(menuOpen, navigation, toggleMenu)}
         </View>
         <View style={pantryListContainer}>
-          <PantryItemList currentGroup={currentGroup}/>
+          <PantryItemList currentGroup={currentGroup} />
         </View>
       </View>
     );
@@ -69,9 +69,6 @@ const PantryScreen: screenComponent = ({
   groups,
   currentGroup,
   navigation,
-  createPantryItem,
-  deletePantryItem,
-  modifyPantryItem,
   toggleMenu,
   menuOpen
 }: any) => {

@@ -3,13 +3,13 @@ import { Platform, StyleSheet, Text, View } from 'react-native';
 import { createStackNavigator, createAppContainer } from 'react-navigation';
 import { Provider } from 'react-redux';
 import { withAuthenticator } from 'aws-amplify-react-native';
-import { PantryScreen,  CreateItemScreen,  CreateGroupScreen} from './src/features/pantry';
+import { PantryScreen, CreateItemScreen, CreateGroupScreen } from './src/features/pantry';
 import { createStore, applyMiddleware } from "redux";
-import {setTopLevelNavigator} from './src/utils/navigationService'
+import { setTopLevelNavigator } from './src/utils/navigationService'
 import reducers from './src/ducks/reducers'
 import ReduxThunk from "redux-thunk";
-import PantryItem from './src/features/pantry/components/pantry-item';
-import {API } from 'aws-amplify'
+import { retrievePantry } from './src/ducks/pantry/actions';
+import { API, Auth } from 'aws-amplify'
 const instructions = Platform.select({
   ios: 'Press Cmd+R to reload,\n' + 'Cmd+D or shake for dev menu',
   android:
@@ -21,22 +21,28 @@ const instructions = Platform.select({
 let store = createStore(reducers, {}, applyMiddleware(ReduxThunk));
 class App extends Component {
 
-  render() {
-    // const store = createStore()
-    const item = {
-      name: "Bell Peppers",
-      price: "12.5",
-      quantity: "2",
-      expirationDate: "",
-      id: "97add10b-57d4-4cb2-894f-1a8b0077e690"
+  async componentDidMount() {
+    const data = await retrievePantry();
+    console.log(data);
+    const user = await Auth.currentAuthenticatedUser();
+    if (user) {
+      let myInit = { // OPTIONAL       
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json',
+        }
+      }
+      const response = await API.get("groupAPI", `/pantry?members=${user.attributes.sub}`, myInit);
+      console.log(response);
     }
-    console.log(item);
+  }
+  render() {
     return (
       <Provider store={store}>
-        <AppNavigator         
-        ref={(navigator) => {
-          setTopLevelNavigator(navigator);
-        }}
+        <AppNavigator
+          ref={(navigator) => {
+            setTopLevelNavigator(navigator);
+          }}
         />
       </Provider>
     );
@@ -68,4 +74,4 @@ let federated = {
 };
 const AppNavigator = createAppContainer(stackNav);
 
-export default withAuthenticator(App, federated={federated});
+export default withAuthenticator(App, federated = { federated });
