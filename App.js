@@ -20,22 +20,6 @@ const instructions = Platform.select({
 
 let store = createStore(reducers, {}, applyMiddleware(ReduxThunk));
 class App extends Component {
-
-  async componentDidMount() {
-    const data = await retrievePantry();
-    console.log(data);
-    const user = await Auth.currentAuthenticatedUser();
-    if (user) {
-      let myInit = { // OPTIONAL       
-        headers: {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json',
-        }
-      }
-      const response = await API.get("groupAPI", `/pantry?members=${user.attributes.sub}`, myInit);
-      console.log(response);
-    }
-  }
   render() {
     return (
       <Provider store={store}>

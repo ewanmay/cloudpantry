@@ -8,14 +8,21 @@ interface PantryItemProps {
 }
 
 const thePantryItem = ({ details }: PantryItemProps) => {
-  const { containerStyle, textStyle } = pantryItemStyles;
+  const { containerStyle, textStyle, columnStyle } = pantryItemStyles;
   const { id, name, quantity, price, expirationDate } = details;
   return (
     <View style={containerStyle}>
-      <Text style={textStyle}>{name}</Text>
-      {quantity ? <Text style={textStyle}>{quantity}</Text> : null}
-      {price ? <Text style={textStyle}>{price}</Text> : null}
-      {expirationDate ? <Text style={textStyle}>{expirationDate}</Text> : <Text style={textStyle}>Expiry</Text>}
+      <View style={columnStyle}>
+        <Text style={textStyle} numberOfLines={1}>{name}</Text></View>
+      <View style={columnStyle}>
+        {quantity ? <Text style={textStyle}>{quantity}</Text> : null}
+      </View>
+      <View style={columnStyle}>
+        {price ? <Text style={textStyle}>${price}</Text> : null}
+      </View>
+      <View style={columnStyle}>
+        {expirationDate ? <Text style={textStyle}>{expirationDate}</Text> : <Text style={textStyle}>Expiry</Text>}
+      </View>
     </View>
   );
 };

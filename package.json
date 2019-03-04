@@ -12,7 +12,8 @@
     "aws-amplify": "^1.1.19",
     "aws-amplify-react-native": "^2.1.7",
     "react": "16.6.3",
-    "react-native": "0.58.3",
+    "react-native": "^0.58.6",
+    "react-native-vector-icons": "^6.3.0",
     "react-navigation": "^3.1.2",
     "react-redux": "^6.0.0",
     "reduce-reducers": "^0.4.3",
@@ -23,7 +24,7 @@
     "babel-core": "7.0.0-bridge.0",
     "babel-jest": "24.0.0",
     "jest": "24.0.0",
-    "metro": "^0.51.1",
+    "metro": "^0.53.0",
     "metro-react-native-babel-preset": "0.51.1",
     "react-test-renderer": "16.6.3"
   },

@@ -150,6 +150,19 @@
 				}
 			}
 		},
+		"storageusers": {
+			"Type": "AWS::CloudFormation::Stack",
+			"Properties": {
+				"TemplateURL": "https://s3.amazonaws.com/cloudpantry-20190202225451-deployment/amplify-cfn-templates/storage/users-cloudformation-template.json",
+				"Parameters": {
+					"tableName": "users",
+					"partitionKeyName": "id",
+					"partitionKeyType": "S",
+					"sortKeyName": "name",
+					"sortKeyType": "S"
+				}
+			}
+		},
 		"functioncloudpantryApi": {
 			"Type": "AWS::CloudFormation::Stack",
 			"Properties": {
@@ -190,6 +203,26 @@
 				}
 			}
 		},
+		"functionuserlambda": {
+			"Type": "AWS::CloudFormation::Stack",
+			"Properties": {
+				"TemplateURL": "https://s3.amazonaws.com/cloudpantry-20190202225451-deployment/amplify-cfn-templates/function/userlambda-cloudformation-template.json",
+				"Parameters": {
+					"storageusersName": {
+						"Fn::GetAtt": [
+							"storageusers",
+							"Outputs.Name"
+						]
+					},
+					"storageusersArn": {
+						"Fn::GetAtt": [
+							"storageusers",
+							"Outputs.Arn"
+						]
+					}
+				}
+			}
+		},
 		"apigroupAPI": {
 			"Type": "AWS::CloudFormation::Stack",
 			"Properties": {
@@ -204,6 +237,26 @@
 					"functioncloudpantryda9b627eArn": {
 						"Fn::GetAtt": [
 							"functioncloudpantryda9b627e",
+							"Outputs.Arn"
+						]
+					}
+				}
+			}
+		},
+		"apiuser": {
+			"Type": "AWS::CloudFormation::Stack",
+			"Properties": {
+				"TemplateURL": "https://s3.amazonaws.com/cloudpantry-20190202225451-deployment/amplify-cfn-templates/api/user-cloudformation-template.json",
+				"Parameters": {
+					"functionuserlambdaName": {
+						"Fn::GetAtt": [
+							"functionuserlambda",
+							"Outputs.Name"
+						]
+					},
+					"functionuserlambdaArn": {
+						"Fn::GetAtt": [
+							"functionuserlambda",
 							"Outputs.Arn"
 						]
 					}

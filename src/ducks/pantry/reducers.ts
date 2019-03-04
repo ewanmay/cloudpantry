@@ -43,12 +43,13 @@ export const initialPantryState: initialPantryStateInterface = {
 const pantryItemsReducer = (state = initialPantryState, action: AnyAction) => {
   switch (action.type) {
     case FETCH_PANTRY:
-      return action.payload || false;
+      return { ...state, currentGroup: action.payload} ;
     case BATCH_CREATE_PANTRY_ITEMS:
       return { ...state, currentGroup: action.payload };
     case MODIFY_PANTRY_ITEM:
       return { ...state, currentGroup: action.payload };
     case CREATE_PANTRY_ITEM_SUCCESS:
+      console.log(action.payload);
       return { ...state, currentGroup: action.payload };
     case CREATE_PANTRY_ITEM_FAILURE:
       return { ...state, error: action.payload };

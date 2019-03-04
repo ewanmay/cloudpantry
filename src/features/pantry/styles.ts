@@ -10,18 +10,21 @@ export const colors = {
 export const pantryItemStyles = StyleSheet.create({
   containerStyle: {
     flexDirection: "row",
-    justifyContent: "space-between",
-    alignItems: "stretch",
+    flex: 1,
+    alignSelf: "stretch",
     backgroundColor: 'white',
     borderBottomColor: colors.paleBlue,
     borderBottomWidth: 2,
+    minHeight: "80%"
 
   },
   textStyle: {
     color: "black",
-    fontSize: 20,
     padding: 6,
     fontFamily: "questrial"
+  },
+  columnStyle: {
+    flex: 1, alignSelf: 'stretch', height: "auto"
   },
   expandedContainerStyle: {
     justifyContent: "center",
@@ -132,6 +135,7 @@ export const pantryScreenStyles = StyleSheet.create({
   pantryListContainer: {
     flexDirection: "column",
     minHeight: 60,
-    margin: 20
+    margin: 20,
+    display: 'flex'
   }
 });

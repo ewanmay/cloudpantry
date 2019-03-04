@@ -1,6 +1,6 @@
 import * as React from "react";
 import { Text, View, TouchableHighlight, TouchableOpacity } from "react-native";
-import { pantryScreenStyles } from "../styles";
+import { pantryScreenStyles } from   "../styles";
 import { Icon } from "react-native-elements";
 import { PantryGroup } from "../../../ducks/pantry/interfaces";
 import AddPantryMenu from "./add-pantry-menu";
@@ -11,14 +11,14 @@ interface screenComponent extends React.Component {
   navigationOptions?: Object;
 }
 
- function renderScreen(
+function renderScreen(
   groups: Array<PantryGroup>,
   navigation: any,
   currentGroup: PantryGroup,
   menuOpen: boolean,
-  toggleMenu: any
+  toggleMenu: any,
+  retrievePantry: any
 ) {
-  console.log(currentGroup, menuOpen);
   const {
     touchableContainerStyle,
     touchableTextStyle,
@@ -27,6 +27,8 @@ interface screenComponent extends React.Component {
     headerContainer,
     pantryListContainer
   } = pantryScreenStyles;
+  if (groups.length === 0) { retrievePantry() }
+  console.log(currentGroup);
   if (groups.length > 0) {
     return (
       <View style={containerStyle}>
@@ -36,13 +38,14 @@ interface screenComponent extends React.Component {
             style={{ position: "absolute", right: 20, top: 20, zIndex: 1, paddingBottom: 20 }}
           >
             <Icon
-              name="bars"
-              type="font-awesome"
+              name="md-menu"
+              type="ionicon"
               color="#334d5c"
               size={32}
               onPress={() => toggleMenu(!menuOpen)}
             />
           </TouchableHighlight>
+
           {PantryMenu(menuOpen, navigation, toggleMenu)}
         </View>
         <View style={pantryListContainer}>
@@ -70,12 +73,13 @@ const PantryScreen: screenComponent = ({
   currentGroup,
   navigation,
   toggleMenu,
-  menuOpen
+  menuOpen,
+  retrievePantry
 }: any) => {
   const { containerStyle } = pantryScreenStyles;
   return (
     <View style={containerStyle}>
-      {renderScreen(groups, navigation, currentGroup, menuOpen, toggleMenu)}
+      {renderScreen(groups, navigation, currentGroup, menuOpen, toggleMenu, retrievePantry)}
     </View>
   );
 };

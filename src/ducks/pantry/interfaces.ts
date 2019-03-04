@@ -16,8 +16,8 @@ export interface PantryItemForm {
 export interface PantryGroup {
   id: string,
   name: string,
-  memberIds: Array<string>,
-  pantryItems: Array<PantryItem>
+  pantryItems: Array<PantryItem>,
+  dateCreated: string
 }
 
 export interface initialPantryStateInterface {
@@ -28,3 +28,4 @@ export interface initialPantryStateInterface {
   menuOpen: boolean,
   itemForm: PantryItemForm
 }
+

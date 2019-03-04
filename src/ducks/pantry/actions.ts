@@ -37,30 +37,61 @@ export const createPantryGroup = (
   pantryGroups: Array<PantryGroup>
 ) => async (dispatch: Dispatch) => {
   try {
-    const memberIds: Array<string> = newGroup.memberIds;
-
     const user = await Auth.currentAuthenticatedUser();
+    console.log(user);
     if (user) {
-      let newArray = memberIds;
-      newArray.push(user.attributes.sub)
-      const returning = { ...newGroup, memberIds: memberIds };
-
-      const updatedPantryGroups = addPantryGroup(pantryGroups, returning);
+      let myInit = { // OPTIONAL       
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json',
+        },
+        queryStringParameters: {
+          'id': user.attributes.sub,
+          'name': user.username
+        }
+      }
+      const userResponse = await API.get("user", `/user?id=${user.attributes.sub},name=${user.username}`, myInit);
+      console.log(userResponse);
+      if (!userResponse) {
+        const data = {
+          body: {
+            name: user.username,
+            id: user.attributes.sub,
+            groups: [newGroup.id],
+            current_group: newGroup.id,
+            date_created: new Date().toISOString()
+          },
+          headers: {}
+        }
+        const createUserResponse = await API.post("user", "/user", data);
+      }
+      else {
+        let updatedGroups = userResponse.groups;
+        updatedGroups.push(newGroup.id);
+        let updatedUser = { ...userResponse, current_group: newGroup.id, groups: updatedGroups }
+        console.log(updatedUser);
+        const data = {
+          body: updatedUser
+        }
+        const createUserResponse = await API.put("user", "/user", data);
+        console.log(createUserResponse)
+      }
+      const updatedPantryGroups = addPantryGroup(pantryGroups, newGroup);
       const init = {
         body: {
-          members: returning.memberIds,
-          name: returning.name,
-          id: returning.id,
-          pantryIds: returning.pantryItems,
+          members: [],
+          name: newGroup.name,
+          id: newGroup.id,
+          pantryIds: newGroup.pantryItems,
           dateCreated: new Date().toISOString()
         },
         headers: {}
       }
-      const res = await API.post("groupAPI", "/pantry", init);
+      const res = await API.post("user", "/pantry", init);
 
       dispatch({
         type: CREATE_PANTRY_GROUP_SUCCESS,
-        payload: { groups: updatedPantryGroups, currentGroup: returning }
+        payload: { groups: updatedPantryGroups, currentGroup: newGroup }
       });
       navigate("PantryHome", {});
     }
@@ -121,37 +152,24 @@ export const createPantryItem = (
     const user = await Auth.currentAuthenticatedUser();
     if (user) {
       const updatedPantryGroup = addPantryItem(pantryGroup, pantryItem);
-      const { memberIds, name, id, pantryItems } = updatedPantryGroup
-      let myInit = { // OPTIONAL       
-        headers: {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json',
-        }
-      }
+      const { name, id, pantryItems, dateCreated } = updatedPantryGroup
 
-      console.log(myInit)
-      const response = await API.get("groupAPI", `/pantry?id=${id}`, myInit);
-      console.log(response.data, "data");
       const init = {
         body: {
-          members: memberIds,
-          name: name,
-          id: id,
+          name,
+          id,
           pantryIds: pantryItems,
-          dateCreated: response.data.dateCreated
+          dateCreated
         },
         headers: {}
       }
 
-      const res = await API.post("groupAPI", "/pantry", init)
+      const res = await API.post("user", "/pantry", init)
       console.log(updatedPantryGroup, res)
       dispatch({
         type: CREATE_PANTRY_ITEM_SUCCESS,
         payload: updatedPantryGroup
       });
-      dispatch({
-        type: PANTRY_ITEM_QUANTITY_CHANGE
-      })
     }
   } catch (error) {
     console.log(error);
@@ -176,17 +194,40 @@ export const retrievePantry = () => async (dispatch: Dispatch) => {
         headers: {
           'Accept': 'application/json',
           'Content-Type': 'application/json',
+        },
+        queryStringParameters: {
+          id: user.attributes.sub,
+          name: user.username
         }
       }
 
-      console.log(myInit)
-      const response = await API.get("groupAPI", `/pantry?memberIds=${user.attributes.sub}`, myInit);
-
-      console.log(response, response.data);
-      dispatch({
-        type: RETRIEVED_PANTRY_GROUP,
-        payload: response.data
-      });
+      let response = await API.get("user", `/user?id=${user.attributes.sub},name=${user.username}`, myInit);
+      if (response.id) {
+        let newInit = { // OPTIONAL       
+          headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+          },
+          queryStringParameters: {
+            id: response.current_group
+          }
+        }
+        const res = await API.get("user", `/pantry`, newInit);
+        const { id, name, pantryIds, dateCreated } = res
+        const formattedGroup = {
+          id,
+          name,
+          pantryItems: pantryIds,
+          dateCreated
+        }
+        dispatch({
+          type: RETRIEVED_PANTRY_GROUP,
+          payload: {
+            groups: [formattedGroup],
+            currentGroup: formattedGroup
+          }
+        });
+      }
       return
     }
   } catch (error) {
@@ -196,7 +237,6 @@ export const retrievePantry = () => async (dispatch: Dispatch) => {
 };
 
 export const toggleMenu = (turnOn: boolean) => (dispatch: Dispatch) => {
-  console.log("Toggled");
   dispatch({
     type: TOGGLE_MENU,
     payload: turnOn

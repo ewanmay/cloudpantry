@@ -1,0 +1,48 @@
+{
+    "paths": [
+        {
+            "name": "/user",
+            "lambdaFunction": "userlambda",
+            "privacy": {
+                "private": true,
+                "auth": "rw"
+            }
+        },
+        {
+            "name": "/pantry",
+            "lambdaArn": "arn:aws:lambda:us-east-1:855317835014:function:cloudpantryda9b627e",
+            "lambdaFunction": "cloudpantryda9b627e",
+            "privacy": {
+                "private": true,
+                "auth": "rw"
+            }
+        }
+    ],
+    "resourceName": "user",
+    "apiName": "cloudpantry82668ff6",
+    "functionArns": [
+        {
+            "lambdaFunction": "userlambda"
+        },
+        {
+            "lambdaFunction": "cloudpantryda9b627e",
+            "lambdaArn": "arn:aws:lambda:us-east-1:855317835014:function:cloudpantryda9b627e"
+        }
+    ],
+    "privacy": {
+        "auth": 2,
+        "unauth": 0,
+        "authRoleName": "cloudpantry-20190202225451-authRole",
+        "unAuthRoleName": "cloudpantry-20190202225451-unauthRole"
+    },
+    "dependsOn": [
+        {
+            "category": "function",
+            "resourceName": "userlambda",
+            "attributes": [
+                "Name",
+                "Arn"
+            ]
+        }
+    ]
+}

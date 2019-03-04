@@ -31,7 +31,7 @@
 				"Timeout": "25",
 				"Code": {
 					"S3Bucket": "cloudpantry-20190202225451-deployment",
-					"S3Key": "amplify-builds/cloudpantryda9b627e-1549994029-latest-build.zip"
+					"S3Key": "amplify-builds/cloudpantryda9b627e-1551584649-latest-build.zip"
 				}
 			}
 		},

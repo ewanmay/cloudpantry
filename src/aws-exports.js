@@ -15,12 +15,21 @@ const awsmobile = {
         {
             "tableName": "pantryTable",
             "region": "us-east-1"
+        },
+        {
+            "tableName": "users",
+            "region": "us-east-1"
         }
     ],
     "aws_cloud_logic_custom": [
         {
             "name": "groupAPI",
             "endpoint": "https://zmwkgcrdlb.execute-api.us-east-1.amazonaws.com/Prod",
+            "region": "us-east-1"
+        },
+        {
+            "name": "user",
+            "endpoint": "https://ct0sdmceng.execute-api.us-east-1.amazonaws.com/Prod",
             "region": "us-east-1"
         }
     ]

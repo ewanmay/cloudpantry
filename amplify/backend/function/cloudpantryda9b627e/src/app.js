@@ -38,23 +38,6 @@ app.use(function(req, res, next) {
   next()
 });
 
-app.get(path, function (req, res) {
-  var params = {
-    TableName: tableName,
-    Select: 'ALL_ATTRIBUTES',
-  };
-  dynamodb.scan(params, (err, data) => {
-    if (err) {
-      res.json({ error: 'Could not load items: ' + err.message });
-    }
-    res.json({
-      data: data.Items.map(item => {
-        return item;
-      })
-    });
-  });
-});
-
 // convert url string param to expected Type
 const convertUrlType = (param, type) => {
   switch(type) {
@@ -143,6 +126,29 @@ app.get(path + '/object' + hashKeyPath + sortKeyPath, function(req, res) {
   });
 });
 
+
+app.get(path, function (req, res) {
+  if (userIdPresent && req.apiGateway) {
+  }
+  let queryParams = {
+    TableName: tableName,
+    Key: {
+      "id": req.apiGateway.event.queryStringParameters.id
+    }
+  }
+  dynamodb.get(queryParams, (err, data) => {
+    if (err) {
+      res.json({ error: 'Could not load items: ' + err.message });
+    } else {
+      if (data.Item) {
+        res.json(data.Item);
+      } else {
+        res.json(data, queryParams, req.apiGateway.event);
+      }
+    }
+  });
+
+})
 
 /************************************
 * HTTP put method for insert object *
