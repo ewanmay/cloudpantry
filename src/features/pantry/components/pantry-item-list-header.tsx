@@ -9,9 +9,6 @@ const PantryListHeader = () => {
   return (
     <View style={containerStyle}>
       <View style={columnStyle}><Text>Name</Text></View>
-      <View style={columnStyle}><Text>Quantity</Text></View>
-      <View style={columnStyle}><Text >Price</Text></View>
-      <View style={columnStyle}><Text numberOfLines={1}>Expiration Date</Text></View>
     </View>
   );
 };

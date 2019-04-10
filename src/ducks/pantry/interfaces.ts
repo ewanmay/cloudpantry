@@ -1,10 +1,11 @@
 export interface PantryItem {
   name: string,
   quantity: number,
-  id: number
+  id: string
   photo?: string,
   price?: number,
   expirationDate?: string,
+  expanded: boolean
 }
 
 export interface PantryItemForm {
@@ -26,6 +27,9 @@ export interface initialPantryStateInterface {
   error: string,
   currentGroup: PantryGroup | null,
   menuOpen: boolean,
-  itemForm: PantryItemForm
+  itemForm: PantryItemForm,
+  selectedItem: string,
+  loadingPantry: boolean,
+  itemToEditId: string
 }
 

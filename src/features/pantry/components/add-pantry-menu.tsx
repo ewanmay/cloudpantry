@@ -18,7 +18,7 @@ const AddPantryMenu = ({ navigation, menuItems, toggleMenu}: any) => {
 };
 
 function handlePress(e: GestureResponderEvent, menuRef: TouchableHighlight | null, route: string, navigation: any, toggleMenu: any) {
-  if(menuRef && menuRef) {
+  if(menuRef) {
   toggleMenu(false);
   navigation.navigate(route);
   }

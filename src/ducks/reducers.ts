@@ -1,8 +1,7 @@
 import { combineReducers } from 'redux';
-import {authReducer} from './auth';
 import pantryReducer from './pantry';
-
+import nfcReducer from './nfc'
 export default combineReducers({
-    auth: authReducer,
-    pantry: pantryReducer
+    pantry: pantryReducer,
+    nfc: nfcReducer
 });

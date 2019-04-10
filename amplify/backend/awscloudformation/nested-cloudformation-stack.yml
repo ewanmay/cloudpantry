@@ -262,6 +262,13 @@
 					}
 				}
 			}
+		},
+		"apibackdoor": {
+			"Type": "AWS::CloudFormation::Stack",
+			"Properties": {
+				"TemplateURL": "https://s3.amazonaws.com/cloudpantry-20190202225451-deployment/amplify-cfn-templates/api/backdoor-cloudformation-template.json",
+				"Parameters": {}
+			}
 		}
 	},
 	"Outputs": {

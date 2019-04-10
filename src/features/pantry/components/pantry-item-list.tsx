@@ -1,34 +1,36 @@
 import * as React from 'react';
 import { Component } from 'react';
-import { View, Text } from 'react-native';
-import PantryItemElement from './pantry-item';
+import { View, Text, FlatList, ListRenderItem } from 'react-native';
+import PantryItemElement from '../containers/pantry-item-container';
 import PantryListHeader from './pantry-item-list-header';
-import { PantryItem } from '../../../ducks/pantry/interfaces';
+import { PantryGroup } from '../../../ducks/pantry/interfaces';
 
-const PantryItemList = ({ currentGroup }: any) => {
-  const { pantryItems } = currentGroup;
-  // console.log(pantryItems);
-
-  return (<View>
-    <Text style={{ fontSize: 20   }}>Pantry</Text>
-    {renderItems(pantryItems)}
-  </View>)
+interface PantryItemListProps {
+  currentGroup: PantryGroup
 }
+  
+const _renderItem  = ({item}) => {
+  return <PantryItemElement key={item.id} details={item} />
+}
+const _keyExtractor = (item, index) => item.id
 
-const renderItems = (pantryItems: Array<PantryItem>) => {
-  console.log(pantryItems)
-  let pantryElements;
+
+const PantryItemList = ({ currentGroup }: PantryItemListProps) => {
+  const {pantryItems} = currentGroup
+  console.log("Pantry Item List", currentGroup)
   if (pantryItems && pantryItems.length > 0) {
-    pantryElements = pantryItems.map(item => <PantryItemElement key={item.id} details={item} />)
     return (
-      <View>
-        <PantryListHeader />
-        {pantryElements}
+      <View style={{height: '90%'}}>
+        <Text style={{ fontSize: 20 }}>Pantry</Text>
+        <FlatList
+          data={pantryItems}
+          renderItem={_renderItem}
+          keyExtractor={_keyExtractor}>
+        </FlatList>
       </View>
     )
   }
-
   return <Text>Create some items!</Text>
 }
 
-export default PantryItemList
+export default PantryItemList 

@@ -1,15 +1,21 @@
+//React Native
 import React, { Component } from 'react';
-import { Platform, StyleSheet, Text, View } from 'react-native';
-import { createStackNavigator, createAppContainer } from 'react-navigation';
-import { Provider } from 'react-redux';
-import { withAuthenticator } from 'aws-amplify-react-native';
-import { PantryScreen, CreateItemScreen, CreateGroupScreen } from './src/features/pantry';
-import { createStore, applyMiddleware } from "redux";
-import { setTopLevelNavigator } from './src/utils/navigationService'
+import { Platform } from 'react-native';
+//Redux
 import reducers from './src/ducks/reducers'
 import ReduxThunk from "redux-thunk";
-import { retrievePantry } from './src/ducks/pantry/actions';
-import { API, Auth } from 'aws-amplify'
+import { Provider } from 'react-redux';
+import { createStore, applyMiddleware } from "redux";
+//Amplify
+import { withAuthenticator } from 'aws-amplify-react-native';
+//Navigation
+import { setTopLevelNavigator } from './src/utils/navigationService'
+import { createStackNavigator, createAppContainer, createMaterialTopTabNavigator } from 'react-navigation';
+//Screens
+import { PantryScreen, CreateItemScreen, CreateGroupScreen, ModifyItemScreen } from './src/features/pantry';
+import NfcScreen from './src/features/nfc/container/nfc-screen-container';
+
+
 const instructions = Platform.select({
   ios: 'Press Cmd+R to reload,\n' + 'Cmd+D or shake for dev menu',
   android:
@@ -33,13 +39,14 @@ class App extends Component {
   }
 }
 
-const stackNav = createStackNavigator({
-  pantry: {
+const stackNav = createMaterialTopTabNavigator({
+  Pantry: {
     screen: createStackNavigator(
       {
         PantryHome: PantryScreen,
         CreateGroup: CreateGroupScreen,
         CreateItem: CreateItemScreen,
+        ModifyItem: ModifyItemScreen
       },
       {
         initialRouteName: "PantryHome"
@@ -48,8 +55,25 @@ const stackNav = createStackNavigator({
     navigationOptions: () => ({
       header: null
     })
+  },
+  Claim: {
+    screen: createStackNavigator(
+      {
+        ClaimScreen: NfcScreen
+      },
+      {
+        initialRouteName: "ClaimScreen"
+      }
+    ),
+
+    navigationOptions: () => ({
+      header: null
+    })
   }
-});
+},
+  {
+    initialRouteName: "Pantry"
+  });
 
 let federated = {
   google_client_id: '', // Enter your google_client_id here

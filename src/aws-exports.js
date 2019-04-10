@@ -31,6 +31,11 @@ const awsmobile = {
             "name": "user",
             "endpoint": "https://ct0sdmceng.execute-api.us-east-1.amazonaws.com/Prod",
             "region": "us-east-1"
+        },
+        {
+            "name": "backdoor",
+            "endpoint": "https://y11lw0a72d.execute-api.us-east-1.amazonaws.com/Prod",
+            "region": "us-east-1"
         }
     ]
 };

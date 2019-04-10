@@ -100,8 +100,8 @@ android {
         applicationId "com.cloudpantry"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 4
-        versionName "2.1.2"
+        versionCode 5
+        versionName "2.1.3"
     }
     signingConfigs {
         release {
@@ -145,6 +145,7 @@ android {
 }
 
 dependencies {
+    implementation project(':react-native-nfc-manager')
     implementation project(':amazon-cognito-identity-js')
     implementation project(':react-native-gesture-handler')
     implementation fileTree(dir: "libs", include: ["*.jar"])

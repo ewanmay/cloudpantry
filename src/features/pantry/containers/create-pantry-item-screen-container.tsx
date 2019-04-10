@@ -5,15 +5,11 @@ import { PantryItem, PantryGroup } from '../../../ducks/pantry/interfaces';
 
 const mapStateToProps = ({ pantry }: any) => {
   const { 
-    items, 
-    groups, 
     error, 
     itemForm, 
     currentGroup
   } = pantry
   return {
-    items,
-    groups,
     error,
     itemForm,
     currentGroup

@@ -19,7 +19,7 @@
 				"s3TemplateURL": "https://s3.amazonaws.com/cloudpantry-20190202225451-deployment/amplify-cfn-templates/auth/cognito2b6201b7-cloudformation-template.yml",
 				"logicalId": "authcognito2b6201b7"
 			},
-			"lastPushTimeStamp": "2019-03-03T03:45:43.271Z",
+			"lastPushTimeStamp": "2019-03-18T01:28:59.137Z",
 			"output": {
 				"AppClientSecret": "lmatvu7tga6k9uoe3u3g8t7gf7u608vfi3gjt63k0g1dt9l9p93",
 				"UserPoolId": "us-east-1_ShrJYfqYA",
@@ -40,7 +40,7 @@
 				"s3TemplateURL": "https://s3.amazonaws.com/cloudpantry-20190202225451-deployment/amplify-cfn-templates/storage/devDB-cloudformation-template.json",
 				"logicalId": "storagedevDB"
 			},
-			"lastPushTimeStamp": "2019-03-03T03:45:43.274Z",
+			"lastPushTimeStamp": "2019-03-18T01:28:59.139Z",
 			"output": {
 				"PartitionKeyName": "id",
 				"Region": "us-east-1",
@@ -57,7 +57,7 @@
 				"s3TemplateURL": "https://s3.amazonaws.com/cloudpantry-20190202225451-deployment/amplify-cfn-templates/storage/pantryTable-cloudformation-template.json",
 				"logicalId": "storagepantryTable"
 			},
-			"lastPushTimeStamp": "2019-03-03T03:45:43.278Z",
+			"lastPushTimeStamp": "2019-03-18T01:28:59.140Z",
 			"output": {
 				"PartitionKeyName": "id",
 				"Region": "us-east-1",
@@ -74,7 +74,7 @@
 				"s3TemplateURL": "https://s3.amazonaws.com/cloudpantry-20190202225451-deployment/amplify-cfn-templates/storage/users-cloudformation-template.json",
 				"logicalId": "storageusers"
 			},
-			"lastPushTimeStamp": "2019-03-03T03:45:43.281Z",
+			"lastPushTimeStamp": "2019-03-18T01:28:59.141Z",
 			"output": {
 				"PartitionKeyName": "id",
 				"SortKeyName": "name",
@@ -109,7 +109,7 @@
 				"s3TemplateURL": "https://s3.amazonaws.com/cloudpantry-20190202225451-deployment/amplify-cfn-templates/function/cloudpantryApi-cloudformation-template.json",
 				"logicalId": "functioncloudpantryApi"
 			},
-			"lastPushTimeStamp": "2019-03-03T03:45:43.285Z",
+			"lastPushTimeStamp": "2019-03-18T01:28:59.141Z",
 			"output": {
 				"Region": "us-east-1",
 				"Arn": "arn:aws:lambda:us-east-1:855317835014:function:cloudpantryApi",
@@ -138,7 +138,7 @@
 				"s3TemplateURL": "https://s3.amazonaws.com/cloudpantry-20190202225451-deployment/amplify-cfn-templates/function/cloudpantryda9b627e-cloudformation-template.json",
 				"logicalId": "functioncloudpantryda9b627e"
 			},
-			"lastPushTimeStamp": "2019-03-03T03:45:43.304Z",
+			"lastPushTimeStamp": "2019-03-18T01:28:59.142Z",
 			"output": {
 				"Region": "us-east-1",
 				"Arn": "arn:aws:lambda:us-east-1:855317835014:function:cloudpantryda9b627e",
@@ -167,7 +167,7 @@
 				"s3TemplateURL": "https://s3.amazonaws.com/cloudpantry-20190202225451-deployment/amplify-cfn-templates/function/userlambda-cloudformation-template.json",
 				"logicalId": "functionuserlambda"
 			},
-			"lastPushTimeStamp": "2019-03-03T03:45:43.294Z",
+			"lastPushTimeStamp": "2019-03-18T01:28:59.143Z",
 			"output": {
 				"Region": "us-east-1",
 				"Arn": "arn:aws:lambda:us-east-1:855317835014:function:userlambda",
@@ -194,7 +194,7 @@
 				"s3TemplateURL": "https://s3.amazonaws.com/cloudpantry-20190202225451-deployment/amplify-cfn-templates/api/groupAPI-cloudformation-template.json",
 				"logicalId": "apigroupAPI"
 			},
-			"lastPushTimeStamp": "2019-03-03T03:45:43.297Z",
+			"lastPushTimeStamp": "2019-03-18T01:28:59.144Z",
 			"output": {
 				"ApiName": "groupAPI",
 				"RootUrl": "https://zmwkgcrdlb.execute-api.us-east-1.amazonaws.com/Prod"
@@ -218,12 +218,27 @@
 				"s3TemplateURL": "https://s3.amazonaws.com/cloudpantry-20190202225451-deployment/amplify-cfn-templates/api/user-cloudformation-template.json",
 				"logicalId": "apiuser"
 			},
-			"lastPushTimeStamp": "2019-03-03T03:45:43.300Z",
+			"lastPushTimeStamp": "2019-03-18T01:28:59.145Z",
 			"output": {
 				"ApiName": "user",
 				"RootUrl": "https://ct0sdmceng.execute-api.us-east-1.amazonaws.com/Prod"
 			},
 			"lastPushDirHash": "dVDcOLKBDLKPJ0wVXb0yVL/6SIw="
+		},
+		"backdoor": {
+			"service": "API Gateway",
+			"providerPlugin": "awscloudformation",
+			"dependsOn": [],
+			"providerMetadata": {
+				"s3TemplateURL": "https://s3.amazonaws.com/cloudpantry-20190202225451-deployment/amplify-cfn-templates/api/backdoor-cloudformation-template.json",
+				"logicalId": "apibackdoor"
+			},
+			"lastPushTimeStamp": "2019-03-18T01:28:59.147Z",
+			"output": {
+				"ApiName": "backdoor",
+				"RootUrl": "https://y11lw0a72d.execute-api.us-east-1.amazonaws.com/Prod"
+			},
+			"lastPushDirHash": "lbmYhPSNfACYbA7Ff3y9LI0c2xE="
 		}
 	}
 }

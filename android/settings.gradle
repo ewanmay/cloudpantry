@@ -1,4 +1,6 @@
 rootProject.name = 'cloudpantry'
+include ':react-native-nfc-manager'
+project(':react-native-nfc-manager').projectDir = new File(rootProject.projectDir, '../node_modules/react-native-nfc-manager/android')
 include ':amazon-cognito-identity-js'
 project(':amazon-cognito-identity-js').projectDir = new File(rootProject.projectDir, '..\\node_modules\\amazon-cognito-identity-js\\android')
 include ':react-native-gesture-handler'

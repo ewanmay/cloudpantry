@@ -1,7 +1,8 @@
 import {
   FETCH_PANTRY,
   CREATE_PANTRY_ITEM_SUCCESS,
-  MODIFY_PANTRY_ITEM,
+  MODIFY_PANTRY_ITEM_SUCCESS,
+  MODIFY_PANTRY_ITEM_FAILURE,
   BATCH_CREATE_PANTRY_ITEMS,
   CREATE_PANTRY_GROUP_SUCCESS,
   CREATE_PANTRY_GROUP_FAILURE,
@@ -19,7 +20,11 @@ import {
   PANTRY_ITEM_FORM_VALIDATE_RESET,
   PANTRY_ITEM_FORM_RESET,
   CREATE_PANTRY_ITEM_FAILURE,
-  RETRIEVED_PANTRY_GROUP
+  RETRIEVED_PANTRY_GROUP,
+  LOADING_PANTRY,
+  SELECT_PANTRY_ITEM,
+  SET_FORM_VALUES_FOR_EDIT,
+
 } from "./types";
 import { navigate } from "../../utils/navigationService";
 import { Dispatch } from "redux";
@@ -38,7 +43,6 @@ export const createPantryGroup = (
 ) => async (dispatch: Dispatch) => {
   try {
     const user = await Auth.currentAuthenticatedUser();
-    console.log(user);
     if (user) {
       let myInit = { // OPTIONAL       
         headers: {
@@ -51,8 +55,8 @@ export const createPantryGroup = (
         }
       }
       const userResponse = await API.get("user", `/user?id=${user.attributes.sub},name=${user.username}`, myInit);
-      console.log(userResponse);
-      if (!userResponse) {
+
+      if (!userResponse.id) {
         const data = {
           body: {
             name: user.username,
@@ -69,12 +73,10 @@ export const createPantryGroup = (
         let updatedGroups = userResponse.groups;
         updatedGroups.push(newGroup.id);
         let updatedUser = { ...userResponse, current_group: newGroup.id, groups: updatedGroups }
-        console.log(updatedUser);
         const data = {
           body: updatedUser
         }
         const createUserResponse = await API.put("user", "/user", data);
-        console.log(createUserResponse)
       }
       const updatedPantryGroups = addPantryGroup(pantryGroups, newGroup);
       const init = {
@@ -116,19 +118,82 @@ export const changePantryGroup = (
 };
 
 export const modifyPantryItem = (
-  pantryItem: PantryItem,
+  modifiedItem: PantryItem,
   pantryGroup: PantryGroup
-) => async (dispatch: Dispatch) => { };
+) => async (dispatch: Dispatch) => {
+
+  try {
+    const user = await Auth.currentAuthenticatedUser();
+    if (user) {
+      const modifiedItems = pantryGroup.pantryItems.map(item => {
+        if (item.id === modifiedItem.id) {
+          return modifiedItem;
+        }
+        else {
+          return item;
+        }
+      });
+      const modifiedGroup = {
+        ...pantryGroup, pantryItems: modifiedItems
+      }
+      console.log("Modified Group", modifiedGroup);
+      const init = {
+        body: {
+          name: modifiedGroup.name,
+          id: modifiedGroup.id,
+          pantryIds: modifiedGroup.pantryItems,
+          dateCreated: modifiedGroup.dateCreated
+        },
+        headers: {}
+      }
+      const res = await API.post("user", "/pantry", init);
+      dispatch({
+        type: MODIFY_PANTRY_ITEM_SUCCESS,
+        payload: modifiedGroup
+      });
+      dispatch({ type: PANTRY_ITEM_FORM_RESET })
+      navigate("PantryHome", {});
+      return
+    }
+  } catch (error) {
+    dispatch({ type: MODIFY_PANTRY_ITEM_FAILURE, payload: error });
+    console.log("Pantry item modification failed", error);
+  }
+};
+
 
 export const deletePantryItem = (
-  pantryItem: PantryItem,
+  itemToDelete: PantryItem,
   pantryGroup: PantryGroup
 ) => async (dispatch: Dispatch) => {
   try {
     const user = await Auth.currentAuthenticatedUser();
-
+    if (user) {
+      const modifiedItems = pantryGroup.pantryItems.filter(({id}) =>  itemToDelete.id !== id);
+      console.log("Deleted items:", modifiedItems)
+      const modifiedGroup = {
+        ...pantryGroup, pantryItems: modifiedItems || []
+      }
+      console.log("Modified Group", modifiedGroup);
+      const init = {
+        body: {
+          name: modifiedGroup.name,
+          id: modifiedGroup.id,
+          pantryIds: modifiedGroup.pantryItems,
+          dateCreated: modifiedGroup.dateCreated
+        },
+        headers: {}
+      }
+      const res = await API.post("user", "/pantry", init);
+      dispatch({
+        type: DELETE_PANTRY_ITEM_SUCCESS,
+        payload: modifiedGroup
+      });
+      return
+    }
   } catch (error) {
     dispatch({ type: DELETE_PANTRY_ITEM_FAILURE, payload: error });
+    console.log("Pantry item modification failed", error);
   }
 };
 
@@ -151,6 +216,7 @@ export const createPantryItem = (
   try {
     const user = await Auth.currentAuthenticatedUser();
     if (user) {
+
       const updatedPantryGroup = addPantryItem(pantryGroup, pantryItem);
       const { name, id, pantryItems, dateCreated } = updatedPantryGroup
 
@@ -184,11 +250,17 @@ export const groupNameChanged = (text: string) => (dispatch: Dispatch) => {
   });
 };
 
-
+export const setFormValuesForEdit = (pantryItem: PantryItem) => (dispatch: Dispatch) => {
+  dispatch({
+    type: SET_FORM_VALUES_FOR_EDIT,
+    payload: pantryItem
+  })
+}
 
 export const retrievePantry = () => async (dispatch: Dispatch) => {
   try {
     const user = await Auth.currentAuthenticatedUser();
+    dispatch({ type: LOADING_PANTRY });
     if (user) {
       let myInit = { // OPTIONAL       
         headers: {
@@ -220,6 +292,7 @@ export const retrievePantry = () => async (dispatch: Dispatch) => {
           pantryItems: pantryIds,
           dateCreated
         }
+        console.log(formattedGroup)
         dispatch({
           type: RETRIEVED_PANTRY_GROUP,
           payload: {
@@ -260,6 +333,14 @@ export const pantryItemFormQuantityChanged = (quantity: string) => (
     payload: quantity
   });
 };
+
+export const selectPantryItem = (item: number) => (dispatch: Dispatch) => {
+  dispatch({
+    type: SELECT_PANTRY_ITEM,
+    payload: item
+  })
+
+}
 
 export const pantryItemFormDateChanged = (date: string) => (
   dispatch: Dispatch

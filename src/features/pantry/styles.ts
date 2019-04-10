@@ -9,30 +9,34 @@ export const colors = {
 
 export const pantryItemStyles = StyleSheet.create({
   containerStyle: {
-    flexDirection: "row",
-    flex: 1,
     alignSelf: "stretch",
     backgroundColor: 'white',
     borderBottomColor: colors.paleBlue,
-    borderBottomWidth: 2,
-    minHeight: "80%"
-
+    borderBottomWidth: 2
+  },  
+  titleStyle: {
+    color: colors.darkerBlue,
+    fontSize: 28,
+    fontFamily: "questrial",
+    padding: 10,
+    flex: 4
   },
   textStyle: {
     color: "black",
     padding: 6,
-    fontFamily: "questrial"
+    fontFamily: "questrial",
   },
   columnStyle: {
-    flex: 1, alignSelf: 'stretch', height: "auto"
+    flexDirection: "row",
   },
   expandedContainerStyle: {
-    justifyContent: "center",
-    alignItems: "center",
-    position: "relative",
-    width: "100%",
-    height: 70,
-    backgroundColor: colors.paleBlue
+    flexDirection: "row",
+    alignSelf: "stretch",
+    backgroundColor: "black",
+    borderBottomColor: colors.paleBlue,
+    borderBottomWidth: 2,
+  
+    minHeight: "80%"
   }
 });
 
@@ -45,6 +49,7 @@ export const pantryMenu = StyleSheet.create({
     top: 10,
     width: "50%",
     backgroundColor: colors.paleBlue,
+    zIndex: 5,
     borderRadius: 10,
     // zIndex: 1
   },
@@ -58,7 +63,8 @@ export const pantryMenu = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     width: "100%",
-    height: 40
+    height: 40,
+    zIndex: 9
   }
 });
 
