@@ -64,6 +64,20 @@ const takePicture = async (camera) => {
         data: { "title": "G.M M-GRN CHEERIOS", "upc": "", "plu_code": "" },
         method: 'POST'
       }
+      var dict = require('./foods.json');  //TODO: a lot of things in this file arent food...
+      var foodsFound = [];
+
+      parsedText.forEach(async string => {
+        var words = string.split(" ");
+        for(var i =0; i<words.length; i++){
+          if (words[i].toLowerCase() in dict){
+            foodsFound.push(words[i]);
+          }
+        }
+      });
+      console.log("Foods found in the recipt:")
+      console.log(foodsFound)
+
       parsedText.forEach(async string => {
         if (string.contains('$')) {
           const regex = /[1-9]+.[1-9]+/g
@@ -75,9 +89,9 @@ const takePicture = async (camera) => {
         }
         else {
           const res = await axios(options);
-          console.log(res);
+          //console.log(res);
         }
-      })
+      });
 
     }
   }
