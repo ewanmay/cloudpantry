@@ -13,6 +13,7 @@ export const PANTRY_ITEM_PRICE_CHANGE = 'pantry_item_price_change';
 export const FETCH_PANTRY = 'fetch_pantry';
 export const RETRIEVED_PANTRY_GROUP = 'retrieved_pantry_group';
 export const LOADING_PANTRY = 'loading_pantry';
+export const NO_PANTRY_GROUPS = 'no_pantry_groups';
 //Item Creation
 export const CREATE_PANTRY_ITEM_SUCCESS = 'create_pantry_item_success';
 export const CREATE_PANTRY_ITEM_FAILURE = 'create_pantry_item_failure';

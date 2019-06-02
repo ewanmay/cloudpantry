@@ -13,16 +13,7 @@ import { setTopLevelNavigator } from './src/utils/navigationService'
 import { createStackNavigator, createAppContainer, createMaterialTopTabNavigator } from 'react-navigation';
 //Screens
 import { PantryScreen, CreateItemScreen, CreateGroupScreen, ModifyItemScreen } from './src/features/pantry';
-import NfcScreen from './src/features/nfc/container/nfc-screen-container';
-
-
-const instructions = Platform.select({
-  ios: 'Press Cmd+R to reload,\n' + 'Cmd+D or shake for dev menu',
-  android:
-    'Double tap R on your keyboard to reload,\n' +
-    'Shake or press menu button for dev menu',
-});
-
+import ScanningScreen from './src/features/ocr/container/ocr-screen-container';
 
 let store = createStore(reducers, {}, applyMiddleware(ReduxThunk));
 class App extends Component {
@@ -56,13 +47,13 @@ const stackNav = createMaterialTopTabNavigator({
       header: null
     })
   },
-  Claim: {
+  Scan: {
     screen: createStackNavigator(
       {
-        ClaimScreen: NfcScreen
+        ScanningScreen: ScanningScreen
       },
       {
-        initialRouteName: "ClaimScreen"
+        initialRouteName: "ScanningScreen"
       }
     ),
 

@@ -25,7 +25,8 @@ import {
   LOADING_PANTRY,
   SET_FORM_VALUES_FOR_EDIT,
   MODIFY_PANTRY_ITEM_SUCCESS,
-  MODIFY_PANTRY_ITEM_FAILURE
+  MODIFY_PANTRY_ITEM_FAILURE,
+  NO_PANTRY_GROUPS
 
 } from "./types";
 import { initialPantryStateInterface } from "./interfaces";
@@ -44,7 +45,8 @@ export const initialPantryState: initialPantryStateInterface = {
   },
   itemToEditId: '',
   selectedItem: null,
-  loadingPantry: false
+  loadingPantry: false,
+  noPantries: false
 };
 
 const pantryItemsReducer = (state = initialPantryState, action: AnyAction) => {
@@ -86,7 +88,18 @@ const pantryGroupsReducer = (state = initialPantryState, action: AnyAction) => {
     case LOADING_PANTRY:
       return { ...state, loadingPantry: true }
     case RETRIEVED_PANTRY_GROUP:
-      return { ...state, groups: action.payload.groups, currentGroup: action.payload.currentGroup, loadingPantry: false };
+      return {
+        ...state,
+        groups: action.payload.groups,
+        currentGroup: action.payload.currentGroup,
+        loadingPantry: false
+      };
+    case NO_PANTRY_GROUPS:
+      return {
+        ...state,
+        noPantries: true,
+        loadingPantry: false
+      }
     default:
       return state;
   }

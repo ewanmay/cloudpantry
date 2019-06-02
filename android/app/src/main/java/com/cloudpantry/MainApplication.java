@@ -3,6 +3,7 @@ package com.cloudpantry;
 import android.app.Application;
 
 import com.facebook.react.ReactApplication;
+import org.reactnative.camera.RNCameraPackage;
 import community.revteltech.nfc.NfcManagerPackage;
 import com.amazonaws.RNAWSCognitoPackage;
 import com.swmansion.gesturehandler.react.RNGestureHandlerPackage;
@@ -26,7 +27,7 @@ public class MainApplication extends Application implements ReactApplication {
     protected List<ReactPackage> getPackages() {
       return Arrays.<ReactPackage>asList(
           new MainReactPackage(),
-            new NfcManagerPackage(),
+            new RNCameraPackage(),
             new RNAWSCognitoPackage(),
             new RNGestureHandlerPackage()
       );

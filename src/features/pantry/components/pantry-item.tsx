@@ -14,49 +14,62 @@ interface PantryItemProps {
   setFormValuesForEdit: any
 }
 
-const thePantryItem = ({ details, selectedItem, selectPantryItem, setFormValuesForEdit, currentGroup, deletePantryItem }: PantryItemProps) => {
-  const { containerStyle, textStyle, titleStyle, columnStyle, expandedContainerStyle } = pantryItemStyles;
-  const { id, name, quantity, price, expirationDate } = details;
+const thePantryItem = ({
+  details,
+  selectedItem,
+  selectPantryItem,
+  setFormValuesForEdit,
+  currentGroup,
+  deletePantryItem }: PantryItemProps) => {
+
+  const {
+    containerStyle,
+    textStyle,
+    titleStyle,
+    columnStyle,
+    expandedContainerStyle
+  } = pantryItemStyles;
+
+  const { id,
+    name,
+    quantity,
+    price,
+    expirationDate
+  } = details;
 
   if (id === selectedItem) {
     return (
       <TouchableWithoutFeedback onPress={() => selectPantryItem(null)}>
         <View style={containerStyle}>
-
           <View style={columnStyle}>
             <Text style={titleStyle} numberOfLines={1}>{name}</Text>
             <View style={{ flex: 2, flexDirection: 'row' }}>
-            <View style={{ margin: 15 }}>
-              <TouchableWithoutFeedback
-                style={{ flex: 1}}>
-
-                <Icon
-                  name="md-create"
-                  type="ionicon"
-                  color="#334d5c"
-                  size={28}
-                  onPress={() => {
-
-                    setFormValuesForEdit(details)
-                    navigate('ModifyItem', {});
-                  }}
-                />
-
-              </TouchableWithoutFeedback>
+              <View style={{ margin: 15 }}>
+                <TouchableWithoutFeedback
+                  style={{ flex: 1 }}>
+                  <Icon
+                    name="md-create"
+                    type="ionicon"
+                    color="#334d5c"
+                    size={28}
+                    onPress={() => {
+                      setFormValuesForEdit(details)
+                      navigate('ModifyItem', {});
+                    }}
+                  />
+                </TouchableWithoutFeedback>
               </View>
-            <View style={{ margin: 15 }}>
-              <TouchableWithoutFeedback
-                style={{ flex: 1}}>
-
-                <Icon
-                  name="md-trash"
-                  type="ionicon"
-                  color="#334d5c"
-                  size={28}
-                  onPress={() => deletePantryItem(details, currentGroup)}
-                />
-
-              </TouchableWithoutFeedback>
+              <View style={{ margin: 15 }}>
+                <TouchableWithoutFeedback
+                  style={{ flex: 1 }}>
+                  <Icon
+                    name="md-trash"
+                    type="ionicon"
+                    color="#334d5c"
+                    size={28}
+                    onPress={() => deletePantryItem(details, currentGroup)}
+                  />
+                </TouchableWithoutFeedback>
               </View>
             </View>
           </View>

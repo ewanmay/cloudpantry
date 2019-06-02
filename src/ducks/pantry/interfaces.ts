@@ -30,6 +30,7 @@ export interface initialPantryStateInterface {
   itemForm: PantryItemForm,
   selectedItem: string,
   loadingPantry: boolean,
-  itemToEditId: string
+  itemToEditId: string,
+  noPantries: boolean
 }
 

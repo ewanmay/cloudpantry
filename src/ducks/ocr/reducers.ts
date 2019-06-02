@@ -6,12 +6,12 @@ import {
 import { AnyAction } from "redux";
 import reduceReducers from "reduce-reducers";
 
-const initialNfcState = {
+const initialOcrState = {
   transmitting: false,
   error: ''
 };
 
-const nfcReducer = (state = initialNfcState, action: AnyAction) => {
+const ocrReducer = (state = initialOcrState, action: AnyAction) => {
   switch (action.type) {
     case START_TRANSMIT: 
       return { ...state, transmitting: true, error:'' }
@@ -25,4 +25,4 @@ const nfcReducer = (state = initialNfcState, action: AnyAction) => {
 };
 
 
-export default reduceReducers(nfcReducer);
+export default reduceReducers(ocrReducer);

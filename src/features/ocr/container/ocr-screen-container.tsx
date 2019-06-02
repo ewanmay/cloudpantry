@@ -1,9 +1,8 @@
-import NfcScreen from "../components/nfc-screen";
+import OcrScreen from "../components/ocr-screen";
 import { connect } from "react-redux";
-import  { startTransmitting, stopTransmitting } from "../../../ducks/nfc/actions";
-const mapStateToProps = ({ nfc, pantry }: any) => {
-  const { items, groups, currentGroup, menuOpen, loadingPantry} = pantry;
-  const { transmitting, error } = nfc;
+import  { startTransmitting, stopTransmitting } from "../../../ducks/ocr/actions";
+const mapStateToProps = ({ocr}: any) => {
+  const { transmitting, error } = ocr;
   return {
     transmitting,
     error
@@ -24,4 +23,4 @@ const mapDispatchToProps = (dispatch: any) => {
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(NfcScreen);
+)(OcrScreen);

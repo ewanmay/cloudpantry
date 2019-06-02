@@ -1,7 +1,8 @@
 import React from 'react'
 import { View, TouchableOpacity, Text } from 'react-native';
+import { RNCamera } from 'react-native-camera';
 
-const NotTransmittingScreen = ({startTransmitting}) => {
+const StartScanningScreen = ({startTransmitting}) => {
   return (
     <View>
       <TouchableOpacity onPress={() => startTransmitting()}>
@@ -12,4 +13,4 @@ const NotTransmittingScreen = ({startTransmitting}) => {
   );
 }
 
-export default NotTransmittingScreen
+export default StartScanningScreen

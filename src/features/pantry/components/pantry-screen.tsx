@@ -11,13 +11,14 @@ interface screenComponent extends React.Component {
 }
 
 function renderScreen(
-  groups: Array<PantryGroup>,
+  groups: any, 
+  currentGroup: any, 
+  noPantries: any, 
+  menuOpen: any, 
+  loadingPantry: any,
   navigation: any,
-  currentGroup: PantryGroup,
-  menuOpen: boolean,
-  loadingPantry: boolean,
   toggleMenu: (menuOpen: boolean) => {},
-  retrievePantry: () => {}
+  retrievePantry: () => {},
 ) {
   const {
     headerStyle,
@@ -25,8 +26,9 @@ function renderScreen(
     headerContainer,
     pantryListContainer,
   } = pantryScreenStyles;
-  if (groups.length === 0) {
-    retrievePantry()
+
+  if (groups.length === 0 && !noPantries) {
+    retrievePantry();
   }
   if (loadingPantry) {
     return (
@@ -35,8 +37,7 @@ function renderScreen(
       </View>
     )
   }
-  if (groups.length > 0 && currentGroup.name) {
-    console.log("Current Group: ", currentGroup)
+  if (groups.length > 0) {
     return (
       <View style={containerStyle}>
         <View style={headerContainer}>
@@ -93,16 +94,17 @@ const PantryMenu = (menuOpen: boolean, navigation: any, toggleMenu: any) => {
 const PantryScreen: screenComponent = ({
   groups,
   currentGroup,
+  noPantries,
+  menuOpen,
+  loadingPantry,
   navigation,
   toggleMenu,
-  menuOpen,
   retrievePantry,
-  loadingPantry
 }: any) => {
   const { containerStyle } = pantryScreenStyles;
   return (
     <View style={containerStyle}>
-      {renderScreen(groups, navigation, currentGroup, menuOpen, loadingPantry, toggleMenu, retrievePantry)}
+      {renderScreen(groups, currentGroup, noPantries, menuOpen, loadingPantry, navigation, toggleMenu, retrievePantry)}
     </View>
   );
 };

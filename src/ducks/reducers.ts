@@ -1,7 +1,7 @@
 import { combineReducers } from 'redux';
 import pantryReducer from './pantry';
-import nfcReducer from './nfc'
+import ocrReducer from './ocr';
 export default combineReducers({
     pantry: pantryReducer,
-    nfc: nfcReducer
+    ocr: ocrReducer
 });
